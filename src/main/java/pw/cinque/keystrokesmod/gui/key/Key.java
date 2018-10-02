@@ -10,7 +10,7 @@ import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-import pw.cinque.keystrokesmod.util.ClickCounter;
+import pw.cinque.keystrokesmod.KeystrokesMod;
 import pw.cinque.keystrokesmod.util.ColorUtil;
 
 /**
@@ -24,10 +24,11 @@ public class Key {
     private final KeyBinding keyBinding;
     @Setter(AccessLevel.PACKAGE)
     private KeyHolder parent;
+    @Setter(AccessLevel.PACKAGE)
+    private KeystrokesMod keystrokesMod;
     @Getter
     private double height = 24.0;
     private Type type = Type.NORMAL;
-    private ClickCounter clickCounter;
     private boolean wasPressed;
     private long pressTime;
 
@@ -46,7 +47,6 @@ public class Key {
     public Key setLeftMouse() {
         height = 20.0;
         type = Type.LEFT_MOUSE;
-        clickCounter = new ClickCounter();
         return this;
     }
 
@@ -56,7 +56,6 @@ public class Key {
     public Key setRightMouse() {
         height = 20.0;
         type = Type.RIGHT_MOUSE;
-        clickCounter = new ClickCounter();
         return this;
     }
 
@@ -64,10 +63,6 @@ public class Key {
         int keyCode = keyBinding.getKeyCode();
         boolean pressed = keyCode < 0 ? Mouse.isButtonDown(keyCode + 100) :
                 Keyboard.isKeyDown(keyCode);
-
-        if (clickCounter != null && !wasPressed && pressed) {
-            clickCounter.onClick();
-        }
 
         if (wasPressed != pressed) {
             pressTime = System.currentTimeMillis();
@@ -133,7 +128,8 @@ public class Key {
     }
 
     private String getMouseText(boolean left) {
-        int cps = clickCounter.getCps();
+        int cps = (left ? keystrokesMod.getLeftClickCounter() :
+                keystrokesMod.getRightClickCounter()).getCps();
 
         if (cps == 0) {
             return left ? "LMB" : "RMB";

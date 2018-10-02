@@ -5,6 +5,7 @@ import lombok.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.opengl.GL11;
+import pw.cinque.keystrokesmod.KeystrokesMod;
 import pw.cinque.keystrokesmod.util.Position;
 
 import java.awt.Color;
@@ -107,8 +108,10 @@ public class KeyHolder {
      * <li>Call {@link Builder#build} to get the created <code>KeyHolder</code> instance.
      * </ul>
      */
+    @RequiredArgsConstructor
     public static class Builder {
 
+        private final KeystrokesMod keystrokesMod;
         private KeyHolder keyHolder = new KeyHolder();
 
         /**
@@ -150,6 +153,7 @@ public class KeyHolder {
 
             for (Key key : keys) {
                 key.setParent(keyHolder);
+                key.setKeystrokesMod(keystrokesMod);
             }
 
             double keyWidth = (keyHolder.width - keyHolder.gapSize * (keys.length - 1))

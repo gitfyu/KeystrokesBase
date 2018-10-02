@@ -1,0 +1,16 @@
+[
+{
+  "modid": "keystrokesmod",
+  "name": "KeystrokesMod",
+  "description": "KeystrokesMod",
+  "version": "v5",
+  "mcversion": "1.7.10",
+  "url": "https://github.com/GitFyu/KeystrokesBase",
+  "updateUrl": "",
+  "authorList": ["Fyu"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

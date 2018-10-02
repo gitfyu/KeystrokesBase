@@ -12,3 +12,7 @@ A simple keystrokes mod base that isn't terrible
 ## What's missing:
 * Position is only stored in memory, instead of a file
 * The key layout or color isn't configurable
+
+***
+
+This project follows the [Google Java Style Guide](http://google.github.io/styleguide/javaguide.html) and requires [Lombok](https://projectlombok.org/).

@@ -7,6 +7,7 @@ A simple keystrokes mod base that isn't terrible
 * Easy to use key layout builder that doesn't require hardcoding any key offsets or dimensions
 * Supports left and right mouse buttons (with CPS counter for both) and space bar
 * Supports key outline
+* New gradient chroma effect
 * Unlike the old keystrokes mods, whenever the game window is resized the HUD position will be updated accordingly (so when you move the HUD to the right side of your screen and then go in fullscreen, the HUD will stay on the right side)
 
 ## What's missing:

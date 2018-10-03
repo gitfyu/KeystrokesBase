@@ -24,14 +24,4 @@ public class ColorUtil {
         GL11.glColor4f(red, green, blue, alpha);
     }
 
-    /**
-     * Inverts a color.
-     *
-     * @param color The ARGB color
-     * @return The inverted color
-     */
-    public static int invert(int color) {
-        return color ^ 0x00FFFFFF;
-    }
-
 }

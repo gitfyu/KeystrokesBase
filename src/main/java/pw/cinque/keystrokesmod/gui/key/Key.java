@@ -83,48 +83,53 @@ public class Key {
         float pressModifier = Math.min(1.0f, (System.currentTimeMillis() - pressTime) / 100.0f);
         float brightness = (pressed ? pressModifier : (1.0f - pressModifier)) * 0.8f;
 
+        // draw key background
         GL11.glColor4f(brightness, brightness, brightness, 0.6f);
-        drawRect(0.0, 0.0, width, height);
-
-        int color = parent.getColor().getRGB();
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glBegin(GL11.GL_QUADS);
+        GL11.glVertex3d(0.0, height, 0.0);
+        GL11.glVertex3d(width, height, 0.0);
+        GL11.glVertex3d(width, 0.0, 0.0);
+        GL11.glVertex3d(0.0, 0.0, 0.0);
+        GL11.glEnd();
+        GL11.glDisable(GL11.GL_BLEND);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
 
         if (parent.isOutlineEnabled()) {
-            ColorUtil.setGlColor(pressed ? ColorUtil.invert(color) : color);
-            drawRect(0.0, 0.0, width, 1.0);
-            drawRect(width - 1.0, 0.0, width, height);
-            drawRect(width, height, 0.0, height - 1.0);
-            drawRect(1.0, height, 0.0, 0.0);
+            drawColoredRect(0.0, 0.0, width, 1.0, pressed);
+            drawColoredRect(width - 1.0, 0.0, width, height, pressed);
+            drawColoredRect(width, height, 0.0, height - 1.0, pressed);
+            drawColoredRect(1.0, height, 0.0, 0.0, pressed);
         }
 
         switch (type) {
             case NORMAL:
-                drawKeyText(Keyboard.getKeyName(keyBinding.getKeyCode()), height, width, pressed,
-                        color);
+                drawKeyText(Keyboard.getKeyName(keyBinding.getKeyCode()), height, width, pressed);
                 return;
             case SPACE_BAR:
-                drawSpaceBar(height, width, pressed, color);
+                drawSpaceBar(height, width, pressed);
                 return;
             case LEFT_MOUSE:
-                drawKeyText(getMouseText(true), height, width, pressed, color);
+                drawKeyText(getMouseText(true), height, width, pressed);
                 return;
             case RIGHT_MOUSE:
-                drawKeyText(getMouseText(false), height, width, pressed, color);
+                drawKeyText(getMouseText(false), height, width, pressed);
         }
     }
 
-    private void drawKeyText(String text, double keyHeight, double keyWidth, boolean pressed,
-                             int color) {
+    private void drawKeyText(String text, double keyHeight, double keyWidth, boolean pressed) {
         FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
         int textWidth = fontRenderer.getStringWidth(text);
         int x = ((int) keyWidth - textWidth) / 2;
         int y = ((int) keyHeight - fontRenderer.FONT_HEIGHT) / 2 + 1;
 
-        fontRenderer.drawString(text, x, y, pressed ? ColorUtil.invert(color) : color);
+        fontRenderer.drawString(text, x, y, parent.getColor(x, pressed));
     }
 
-    private void drawSpaceBar(double keyHeight, double keyWidth, boolean pressed, int color) {
-        ColorUtil.setGlColor(pressed ? ColorUtil.invert(color) : color);
-        drawRect(keyWidth * 0.25, keyHeight / 2.0 - 1.0, keyWidth * 0.75, keyHeight / 2.0 + 1.0);
+    private void drawSpaceBar(double keyHeight, double keyWidth, boolean pressed) {
+        drawColoredRect(keyWidth * 0.25, keyHeight / 2.0 - 1.0, keyWidth * 0.75, keyHeight / 2.0 + 1.0,
+                pressed);
     }
 
     private String getMouseText(boolean left) {
@@ -138,13 +143,17 @@ public class Key {
         }
     }
 
-    private void drawRect(double x1, double y1, double x2, double y2) {
+    private void drawColoredRect(double x1, double y1, double x2, double y2, boolean invertColor) {
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glShadeModel(GL11.GL_SMOOTH);
         GL11.glBegin(GL11.GL_QUADS);
+        ColorUtil.setGlColor(parent.getColor(x1, invertColor));
         GL11.glVertex3d(x1, y2, 0.0);
+        ColorUtil.setGlColor(parent.getColor(x2, invertColor));
         GL11.glVertex3d(x2, y2, 0.0);
         GL11.glVertex3d(x2, y1, 0.0);
+        ColorUtil.setGlColor(parent.getColor(x1, invertColor));
         GL11.glVertex3d(x1, y1, 0.0);
         GL11.glEnd();
         GL11.glDisable(GL11.GL_BLEND);

@@ -30,12 +30,16 @@ public class KeyHolder {
     private double height;
     private int lastDisplayWidth;
     private int lastDisplayHeight;
-    @Getter
     @Setter
     private Color color = Color.WHITE;
     @Getter
     @Setter
+    private boolean usingChroma;
+    @Getter
+    @Setter
     private boolean outlineEnabled = true;
+    // used by the chroma effect to calculate the hue for every key
+    private double keyOffset;
 
     /**
      * Notifies the <code>KeyHolder</code> that the left mouse button was pressed.
@@ -89,14 +93,50 @@ public class KeyHolder {
 
             for (Key key : row.keys) {
                 key.draw(row.keyWidth, row.height);
-                GL11.glTranslated(row.keyWidth + gapSize, 0.0, 0.0);
+                double offset = row.keyWidth + gapSize;
+                GL11.glTranslated(offset, 0.0, 0.0);
+                keyOffset += offset / width;
             }
 
             GL11.glPopMatrix();
             GL11.glTranslated(0.0, row.height + gapSize, 0.0);
+            keyOffset = 0.0f;
         }
 
         GL11.glPopMatrix();
+    }
+
+    /**
+     * Gets the color for the current key. If the chroma effect is enabled, this method will
+     * automatically calculate the correct hue for the key's position.
+     *
+     * @param offset The distance between the key position and the position of where you're drawing
+     * @param invert If <code>true</code> the color is inverted
+     * @return The ARGB color
+     */
+    int getColor(double offset, boolean invert) {
+        int color;
+
+        if (usingChroma) {
+            // Cycle through color spectrum for 2 seconds
+            float hue = System.currentTimeMillis() % 2000L / 2000.0f;
+            // Adjust hue based on key position
+            hue += (keyOffset + offset / width) * 0.3;
+            color = Color.HSBtoRGB(hue, 1.0f, 1.0f);
+
+            // if chroma effect is enabled, use black instead of the actual inverted color
+            if (invert) {
+                color = 0xFF000000;
+            }
+        } else {
+            color = this.color.getRGB();
+
+            if (invert) {
+                color ^= 0x00FFFFFF;
+            }
+        }
+
+        return color;
     }
 
     /**

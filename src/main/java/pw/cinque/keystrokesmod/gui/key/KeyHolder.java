@@ -118,15 +118,15 @@ public class KeyHolder {
         int color;
 
         if (usingChroma) {
-            // Cycle through color spectrum for 2 seconds
-            float hue = System.currentTimeMillis() % 2000L / 2000.0f;
-            // Adjust hue based on key position
-            hue += (keyOffset + offset / width) * 0.3;
-            color = Color.HSBtoRGB(hue, 1.0f, 1.0f);
-
             // if chroma effect is enabled, use black instead of the actual inverted color
             if (invert) {
                 color = 0xFF000000;
+            } else {
+                // Cycle through color spectrum for 2 seconds
+                float hue = System.currentTimeMillis() % 2000L / 2000.0f;
+                // Adjust hue based on key position
+                hue += (keyOffset + offset / width) * 0.3;
+                color = Color.HSBtoRGB(hue, 1.0f, 1.0f);
             }
         } else {
             color = this.color.getRGB();

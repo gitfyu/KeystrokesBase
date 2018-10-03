@@ -28,8 +28,10 @@ public class KeyHolder {
     private double width;
     @Getter
     private double height;
-    private int lastDisplayWidth;
-    private int lastDisplayHeight;
+    private int displayWidth;
+    private int displayHeight;
+    private int scaledDisplayWidth;
+    private int scaledDisplayHeight;
     @Setter
     private Color color = Color.WHITE;
     @Getter
@@ -72,17 +74,31 @@ public class KeyHolder {
     public void draw(int mouseDeltaX, int mouseDeltaY) {
         Minecraft mc = Minecraft.getMinecraft();
 
-        if (lastDisplayWidth != mc.displayWidth || lastDisplayHeight != mc.displayHeight) {
+        if (displayWidth != mc.displayWidth || displayHeight != mc.displayHeight) {
             ScaledResolution resolution = new ScaledResolution(mc, mc.displayWidth,
                     mc.displayHeight);
 
-            position.updateScreenSize(resolution.getScaledWidth(), resolution.getScaledHeight());
-            lastDisplayWidth = mc.displayWidth;
-            lastDisplayHeight = mc.displayHeight;
+            position.updateScreenSize(scaledDisplayWidth = resolution.getScaledWidth(),
+                    scaledDisplayHeight = resolution.getScaledHeight());
+
+            displayWidth = mc.displayWidth;
+            displayHeight = mc.displayHeight;
         }
 
         if (dragging) {
             position.translate(mouseDeltaX, mouseDeltaY);
+        }
+
+        if (position.getX() < 0.0) {
+            position.setX(0);
+        } else if (position.getX() + width > scaledDisplayWidth) {
+            position.setX((int) (scaledDisplayWidth - width));
+        }
+
+        if (position.getY() < 0.0) {
+            position.setY(0);
+        } else if (position.getY() + height > scaledDisplayHeight) {
+            position.setY((int) (scaledDisplayHeight - height));
         }
 
         GL11.glPushMatrix();

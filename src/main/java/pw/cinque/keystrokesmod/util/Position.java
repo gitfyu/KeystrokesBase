@@ -59,7 +59,7 @@ public class Position {
      *
      * @param x The X coordinate
      */
-    private void setX(int x) {
+    public void setX(int x) {
         // if the X coordinate is closer to the right side of the screen, store the position
         // relative to the right side instead
         if (x > screenWidth / 2) {
@@ -85,7 +85,7 @@ public class Position {
      *
      * @param y The Y coordinate
      */
-    private void setY(int y) {
+    public void setY(int y) {
         // if the Y coordinate is closer to the bottom of the screen, store the position relative
         // to the bottom instead
         if (y > screenHeight / 2) {

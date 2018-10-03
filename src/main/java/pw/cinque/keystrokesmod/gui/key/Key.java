@@ -128,8 +128,8 @@ public class Key {
     }
 
     private void drawSpaceBar(double keyHeight, double keyWidth, boolean pressed) {
-        drawColoredRect(keyWidth * 0.25, keyHeight / 2.0 - 1.0, keyWidth * 0.75, keyHeight / 2.0 + 1.0,
-                pressed);
+        drawColoredRect(keyWidth * 0.25, keyHeight / 2.0 - 1.0, keyWidth * 0.75,
+                keyHeight / 2.0 + 1.0, pressed);
     }
 
     private String getMouseText(boolean left) {

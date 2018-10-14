@@ -44,7 +44,7 @@ public class KeyHolder {
     private double keyOffset;
 
     /**
-     * Notifies the <code>KeyHolder</code> that the left mouse button was pressed.
+     * Notifies the {@code KeyHolder} that the left mouse button was pressed.
      *
      * @param mouseX The mouse's X coordinate
      * @param mouseY The mouse's Y coordinate
@@ -59,7 +59,7 @@ public class KeyHolder {
     }
 
     /**
-     * Notifies the <code>KeyHolder</code> that the left mouse button has been released.
+     * Notifies the {@code KeyHolder} that the left mouse button has been released.
      */
     public void onMouseRelease() {
         dragging = false;
@@ -127,7 +127,7 @@ public class KeyHolder {
      * automatically calculate the correct hue for the key's position.
      *
      * @param offset The distance between the key position and the position of where you're drawing
-     * @param invert If <code>true</code> the color is inverted
+     * @param invert If {@code true} the color is inverted
      * @return The ARGB color
      */
     int getColor(double offset, boolean invert) {
@@ -157,12 +157,12 @@ public class KeyHolder {
 
     /**
      * This class is used to create a {@link KeyHolder} instance. Usage:
-     * <ul>
+     * <ol>
      * <li>Set the width using {@link Builder#setWidth} and the gap size using {@link
      * Builder#setGapSize}.
      * <li>Add the keys using {@link Builder#addRow}.
      * <li>Call {@link Builder#build} to get the created <code>KeyHolder</code> instance.
-     * </ul>
+     * </ol>
      */
     @RequiredArgsConstructor
     public static class Builder {
@@ -171,7 +171,7 @@ public class KeyHolder {
         private KeyHolder keyHolder = new KeyHolder();
 
         /**
-         * Sets the total width of the <code>KeyHolder</code>.
+         * Sets the total width of the {@code KeyHolder}.
          *
          * @param width The width
          * @throws IllegalArgumentException If <code>width</code> is lower than or equal to zero
@@ -187,7 +187,7 @@ public class KeyHolder {
          * <b>after</b> this method has been called, previous rows will not be updated.
          *
          * @param gapSize The gap size
-         * @throws IllegalArgumentException If <code>gapSize</code> is lower than or equal to zero
+         * @throws IllegalArgumentException If {@code gapSize} is lower than or equal to zero
          */
         public Builder setGapSize(int gapSize) {
             Preconditions.checkArgument(gapSize > 0);
@@ -198,7 +198,7 @@ public class KeyHolder {
         /**
          * Adds a row of keys.
          *
-         * @param keys The <code>Key</code>s in this row
+         * @param keys The {@code Key}s in this row
          * @throws IllegalStateException If this method is called before the width or gap size are
          *                               set.
          * @see Builder#setWidth
@@ -220,10 +220,10 @@ public class KeyHolder {
         }
 
         /**
-         * Gets the <code>KeyHolder</code> instance which contains the keys that were added using
+         * Gets the {@code KeyHolder} instance which contains the keys that were added using
          * the {@link Builder#addRow} method.
          *
-         * @return The created <code>KeyHolder</code>
+         * @return The created {@code KeyHolder}
          *
          * @throws IllegalStateException If this method is called before any rows have been added.
          * @see Builder#addRow

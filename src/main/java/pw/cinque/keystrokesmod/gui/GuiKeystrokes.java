@@ -6,7 +6,7 @@ import pw.cinque.keystrokesmod.KeystrokesMod;
 import pw.cinque.keystrokesmod.gui.key.KeyHolder;
 
 /**
- * This <code>GuiScreen</code> allows the user to change the position of the {@link KeyHolder}.
+ * This {@code GuiScreen} allows the user to change the position of the {@link KeyHolder}.
  */
 @RequiredArgsConstructor
 public class GuiKeystrokes extends GuiScreen {

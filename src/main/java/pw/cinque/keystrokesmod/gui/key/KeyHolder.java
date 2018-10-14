@@ -161,7 +161,7 @@ public class KeyHolder {
      * <li>Set the width using {@link Builder#setWidth} and the gap size using {@link
      * Builder#setGapSize}.
      * <li>Add the keys using {@link Builder#addRow}.
-     * <li>Call {@link Builder#build} to get the created <code>KeyHolder</code> instance.
+     * <li>Call {@link Builder#build} to get the created {@code KeyHolder} instance.
      * </ol>
      */
     @RequiredArgsConstructor
@@ -174,7 +174,7 @@ public class KeyHolder {
          * Sets the total width of the {@code KeyHolder}.
          *
          * @param width The width
-         * @throws IllegalArgumentException If <code>width</code> is lower than or equal to zero
+         * @throws IllegalArgumentException If {@code width} is lower than or equal to zero
          */
         public Builder setWidth(int width) {
             Preconditions.checkArgument(width > 0);
